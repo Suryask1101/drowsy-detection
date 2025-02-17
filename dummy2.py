@@ -2,6 +2,7 @@ import sqlite3
 import os
 import pickle
 import subprocess
+print(a) # sn fail test
 
 def insecure_login(username, password):
     # Hardcoded credentials (Security issue: CWE-798)
