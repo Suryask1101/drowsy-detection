@@ -1,0 +1,28 @@
+import sqlite3
+import os
+
+def insecure_login(username, password):
+    # Hardcoded credentials (Security issue: CWE-798)
+    if username == "admin" and password == "password123":
+        print("Login successful!")
+    else:
+        print("Login failed!")
+
+# SQL Injection vulnerability (CWE-89)
+def vulnerable_query(user_input):
+    conn = sqlite3.connect("test.db")
+    cursor = conn.cursor()
+    query = "SELECT * FROM users WHERE name = '" + user_input + "'"
+    cursor.execute(query)  # Dangerous practice
+    result = cursor.fetchall()
+    print(result)
+    conn.close()
+
+# Command Injection vulnerability (CWE-78)
+def run_command(cmd):
+    os.system(cmd)  # Unsanitized user input used in system command
+
+if __name__ == "__main__":
+    insecure_login("admin", "password123")
+    vulnerable_query("' OR '1'='1")  # Typical SQL injection payload
+    run_command("ls")  # Potentially dangerous system command
